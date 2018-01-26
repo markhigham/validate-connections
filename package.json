@@ -9,7 +9,7 @@
   "bin": {
     "validate-connections": "bin/validate-connections.js"
   },
-  "author": "",
+  "author": "Mark Higham",
   "license": "ISC",
   "dependencies": {
     "async": "^2.6.0",
