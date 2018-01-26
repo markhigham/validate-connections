@@ -1,0 +1,24 @@
+{
+  "name": "validate-connections-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "validate-connections": "bin/validate-connections.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "colors": "^1.1.2",
+    "debug": "^3.1.0",
+    "debug-levels": "^0.2.0",
+    "lodash": "^4.17.4",
+    "minimist": "^1.2.0",
+    "mssql": "^4.1.0",
+    "xml2js": "^0.4.19"
+  }
+}
