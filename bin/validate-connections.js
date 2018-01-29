@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const logger = require('../lib/logger')('/');
 const argv = require('minimist')(process.argv.slice(2));
 const fs = require('fs');
