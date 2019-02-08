@@ -1,7 +1,7 @@
 {
   "name": "validate-connections",
   "version": "1.0.1",
-  "description": "",
+  "description": "Use this loop through the connections in your web.config and test",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
