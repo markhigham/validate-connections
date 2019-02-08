@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-const logger = require('../lib/logger')('/');
-const argv = require('minimist')(process.argv.slice(2));
-const fs = require('fs');
-const _ = require('lodash');
-const ConfigParser = require('../lib/config-parser');
-const colors = require('colors');
-const Validator = require('../lib/validator');
+const logger = require("../lib/logger")("/");
+const argv = require("minimist")(process.argv.slice(2));
+const fs = require("fs");
+const _ = require("lodash");
+const ConfigParser = require("../lib/config-parser");
+const colors = require("colors");
+const Validator = require("../lib/validator");
 
 function showHelp() {
-    console.log(`validate-connections configfile [-v values.config] [-f show-full-passwords]
+  console.log(`validate-connections configfile [-v values.config] [-f show-full-passwords]
 configfile  path/to/web.config
     absolute or relative path to web.config or app.config
 
@@ -26,14 +26,14 @@ configfile  path/to/web.config
 }
 
 if (argv.h) {
-    showHelp();
-    process.exit(0);
+  showHelp();
+  process.exit(0);
 }
 
 //Do we get the config filename
 if (argv._.length === 0) {
-    showHelp();
-    process.exit(0);
+  showHelp();
+  process.exit(0);
 }
 
 //Get config file details
@@ -41,35 +41,48 @@ const configFile = argv._[0];
 logger.debug(configFile);
 
 if (!fs.existsSync(configFile)) {
-    console.log(`${configFile} not found`);
-    process.exit(0);
+  console.log(`${configFile} not found`);
+  process.exit(0);
 }
 
-const configContents = fs.readFileSync(configFile, 'utf8');
+const configContents = fs.readFileSync(configFile, "utf8");
 const parser = new ConfigParser();
 
 const validator = new Validator();
 
-validator.process(connection => {
+validator
+  .process(connection => {
     if (argv.f) {
-        process.stdout.write(colors.white(connection.name) + " " + colors.gray(connection.originalConnectionString));
+      process.stdout.write(
+        colors.white(connection.name) +
+          " " +
+          colors.gray(connection.originalConnectionString)
+      );
+    } else {
+      process.stdout.write(
+        colors.white(connection.name) +
+          " " +
+          colors.gray(connection.getSafeConnectionString())
+      );
     }
-    else {
-        process.stdout.write(colors.white(connection.name) + " " + colors.gray(connection.getSafeConnectionString()));
-    }
-}).success(connection => {
-    console.log(colors.green(' ok'));
-}).fail((err, connection) => {
+  })
+  .success(connection => {
+    console.log(colors.green(" ok"));
+  })
+  .fail((err, connection) => {
     console.log(" " + colors.red(err));
-});
+  });
 
-parser.parse(configContents).then((connectionStrings) => {
+parser
+  .parse(configContents)
+  .then(connectionStrings => {
     return validator.start(connectionStrings);
-}).then
-    (() => {
-        // console.log(colors.green('ok'));
-    }).catch(err => {
-        logger.error(err);
-        console.error(err);
-        process.exit(-1);
-    });
+  })
+  .then(() => {
+    // console.log(colors.green('ok'));
+  })
+  .catch(err => {
+    logger.error(err);
+    console.error(err);
+    process.exit(-1);
+  });
